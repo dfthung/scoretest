@@ -498,14 +498,14 @@
         const playerConfig = playerWidgetByLeagueIndex[index];
 
         const layout = document.createElement("div");
-        layout.className = "grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.85fr)] xl:items-stretch";
+        layout.className = "grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,0.95fr)] xl:items-stretch";
 
         const left = document.createElement("div");
         left.className = "flex h-full min-w-0 flex-col";
         left.appendChild(makeWidgetElement(config));
 
         const right = document.createElement("div");
-        right.className = "flex h-full min-w-0 flex-col xl:justify-self-end";
+        right.className = "flex h-full min-w-0 flex-col";
         if (playerConfig) {
           right.appendChild(makeWidgetElement(playerConfig));
         } else {
