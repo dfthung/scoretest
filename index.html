@@ -42,30 +42,11 @@
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="space-y-6">
         <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <label for="league-select" class="text-xs font-bold uppercase tracking-[0.18em] text-ocean">Chọn bảng</label>
-          <select id="league-select" class="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 outline-none focus:border-accent">
-            <option value="0">V.League</option>
-            <option value="1">MLS</option>
-            <option value="2">K-League 1</option>
-            <option value="3">Pro League Saudi Arabia</option>
-            <option value="4">Ngoại Hạng Nga</option>
-            <option value="5">Primeira Liga Bồ Đào Nha</option>
-            <option value="6">Eredivisie Hà Lan</option>
-            <option value="7">J. League</option>
-            <option value="8">Super League Trung Quốc</option>
-            <option value="9">Serie A Brazil</option>
-            <option value="10">A-League Úc</option>
-            <option value="11">Liga Argentina</option>
-            <option value="12">Scottish Premiership</option>
-            <option value="13">Serie A Italy</option>
-            <option value="14">Ligue 1 Pháp</option>
-            <option value="15">Bundesliga</option>
-            <option value="16">La Liga</option>
-            <option value="17">World Cup</option>
-          </select>
+          <label for="league-select" class="text-xs font-bold uppercase tracking-[0.18em] text-ocean">Giải đấu</label>
+          <select id="league-select" class="mt-3 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 outline-none focus:border-accent"></select>
         </div>
 
-        <div id="league-widget-host" class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"></div>
+        <div id="league-widget-host" class="mx-auto w-full max-w-6xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"></div>
       </div>
     </main>
     <footer></footer>
@@ -80,7 +61,75 @@
         return;
       }
 
-      const widgetConfigs = [
+      const leagueOptions = [
+        { value: 4, label: "Ngoại hạng Nga", group: "Châu Âu" },
+        { value: 5, label: "Primeira Liga Bồ Đào Nha", group: "Châu Âu" },
+        { value: 6, label: "Eredivisie Hà Lan", group: "Châu Âu" },
+        { value: 12, label: "Scottish Premiership", group: "Châu Âu" },
+        { value: 13, label: "Serie A Ý", group: "Châu Âu" },
+        { value: 14, label: "Ligue 1 Pháp", group: "Châu Âu" },
+        { value: 15, label: "Bundesliga", group: "Châu Âu" },
+        { value: 16, label: "La Liga", group: "Châu Âu" },
+        { value: 28, label: "Vòng loại World Cup châu Âu", group: "Châu Âu" },
+        { value: 33, label: "UEFA Nations League A", group: "Châu Âu" },
+        { value: 35, label: "Europa League", group: "Châu Âu" },
+        { value: 36, label: "Champions League", group: "Châu Âu" },
+        { value: 0, label: "V.League", group: "Châu Á" },
+        { value: 2, label: "K-League 1", group: "Châu Á" },
+        { value: 3, label: "Pro League Saudi Arabia", group: "Châu Á" },
+        { value: 7, label: "J. League", group: "Châu Á" },
+        { value: 8, label: "Super League Trung Quốc", group: "Châu Á" },
+        { value: 18, label: "Giải vô địch Thái Lan", group: "Châu Á" },
+        { value: 19, label: "Giải U19 châu Á", group: "Châu Á" },
+        { value: 20, label: "Đại hội Thể thao châu Á", group: "Châu Á" },
+        { value: 21, label: "Cúp châu Á U17", group: "Châu Á" },
+        { value: 23, label: "Cúp châu Á U23", group: "Châu Á" },
+        { value: 25, label: "Giải vô địch Đông Á", group: "Châu Á" },
+        { value: 27, label: "Vòng loại World Cup châu Á", group: "Châu Á" },
+        { value: 29, label: "AFC Champions League Two", group: "Châu Á" },
+        { value: 30, label: "Asian Cup", group: "Châu Á" },
+        { value: 32, label: "AFC Champions League", group: "Châu Á" },
+        { value: 1, label: "Giải bóng đá nhà nghề Mỹ", group: "Châu Mỹ" },
+        { value: 9, label: "Giải vô địch Brazil", group: "Châu Mỹ" },
+        { value: 11, label: "Giải vô địch Argentina", group: "Châu Mỹ" },
+        { value: 24, label: "Copa America", group: "Châu Mỹ" },
+        { value: 10, label: "Giải vô địch Australia", group: "Châu Đại Dương" },
+        { value: 17, label: "World Cup", group: "Giải quốc tế" },
+        { value: 22, label: "World Cup U17", group: "Giải quốc tế" },
+        { value: 26, label: "Cúp thế giới các CLB FIFA", group: "Giải quốc tế" },
+        { value: 31, label: "Vòng loại World Cup châu Phi", group: "Giải quốc tế" },
+        { value: 34, label: "World Cup U20", group: "Giải quốc tế" }
+      ];
+
+      const orderedConfigIndexes = leagueOptions.map((option) => option.value);
+      const optionsByGroup = leagueOptions.reduce((acc, option) => {
+        if (!acc[option.group]) {
+          acc[option.group] = [];
+        }
+        acc[option.group].push(option);
+        return acc;
+      }, {});
+
+      const groupOrder = ["Châu Âu", "Châu Á", "Châu Mỹ", "Châu Đại Dương", "Giải quốc tế"];
+      const frag = document.createDocumentFragment();
+      groupOrder.forEach((group) => {
+        const items = optionsByGroup[group];
+        if (!items || items.length === 0) {
+          return;
+        }
+        const optgroup = document.createElement("optgroup");
+        optgroup.label = group;
+        items.forEach((option) => {
+          const el = document.createElement("option");
+          el.value = String(orderedConfigIndexes.indexOf(option.value));
+          el.textContent = option.label;
+          optgroup.appendChild(el);
+        });
+        frag.appendChild(optgroup);
+      });
+      select.replaceChildren(frag);
+
+      const leagueWidgets = [
         {
           id: "widget-4vssmpji86we",
           src: "https://widgets.scoreaxis.com/api/football/league-table/623225ff09ac1611ee0dc942?widgetId=4vssmpji86we&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
@@ -152,16 +201,212 @@
         {
           id: "widget-noivmpjiupd0",
           src: "https://widgets.scoreaxis.com/api/football/league-table/62322bfa75414360044d5ca4?widgetId=noivmpjiupd0&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-bezbmpjkostd",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232346de797635ae1683310?widgetId=bezbmpjkostd&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-mjj5mpjkt7pv",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c9298b2e367f650e96a?widgetId=mjj5mpjkt7pv&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-35jkmpjktqzn",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c9254325170cc61a2d0?widgetId=35jkmpjktqzn&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-mofwmpjkujcj",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/67f64f3c6c640cb4310f5c92?widgetId=mofwmpjkujcj&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-9qfkmpjkv4m2",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c727bf6106c72572d4a?widgetId=9qfkmpjkv4m2&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-cmk6mpjkvjr9",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/623237bd272e3678551e1ee4?widgetId=cmk6mpjkvjr9&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-had4mpjkw0df",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c5b13ee1621646be252?widgetId=had4mpjkw0df&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-8wgampjkwnb1",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c7213ee1621646be514?widgetId=8wgampjkwnb1&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-5yt7mpjkx4oz",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c5e7bf6106c72572a94?widgetId=5yt7mpjkx4oz&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-52bvmpjkxzzj",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/623237838afe7e403066ceaa?widgetId=52bvmpjkxzzj&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-h2gampjkyq9j",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62323781eb82e258154aaeea?widgetId=h2gampjkyq9j&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-o5anmpjkz5v1",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/623237b876e30636183dc5f4?widgetId=o5anmpjkz5v1&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-bt1gmpjkzub0",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232380a6b17635a91557d98?widgetId=bt1gmpjkzub0&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-wep1mpjl0ojs",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/623237858afe7e403066ced4?widgetId=wep1mpjl0ojs&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-8x1pmpjl1ah4",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232326c02020c570e0a95bc?widgetId=8x1pmpjl1ah4&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-qyabmpjl3fm0",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232371247e10a66b322d10c?widgetId=qyabmpjl3fm0&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-85wdmpjl3v9t",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62327c7113ee1621646be4fe?widgetId=85wdmpjl3v9t&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-2u1jmpjl4p28",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/62322bf0ea44793ec978b7a6?widgetId=2u1jmpjl4p28&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        {
+          id: "widget-4iuompjl51gw",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=4iuompjl51gw&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
         }
       ];
 
-      const renderWidget = (index) => {
-        const config = widgetConfigs[index];
-        if (!config) {
-          host.replaceChildren();
-          return;
+      const playerWidgetByLeagueIndex = {
+        0: {
+          id: "widget-m7tfmpjmd6ek",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623225ff09ac1611ee0dc942?widgetId=m7tfmpjmd6ek&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        1: {
+          id: "widget-i64rmpjmcnq0",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322d88f6e8396290141c10?widgetId=i64rmpjmcnq0&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        2: {
+          id: "widget-gx8tmpjmbay2",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623234a86bd9617c2c1e91ae?widgetId=gx8tmpjmbay2&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        3: {
+          id: "widget-pv1bmpjmarjt",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/6232328281a87a6b7041ee08?widgetId=pv1bmpjmarjt&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        4: {
+          id: "widget-skhjmpjmaf29",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322ba27aee66235a2be89c?widgetId=skhjmpjmaf29&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        5: {
+          id: "widget-38t4mpjma33u",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623237abb593273124091ff8?widgetId=38t4mpjma33u&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        6: {
+          id: "widget-ydoompjm9lep",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322b9003f74f47356935a4?widgetId=ydoompjm9lep&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        8: {
+          id: "widget-k1kjmpjm2md2",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c5f7bf6106c72572ac0?widgetId=k1kjmpjm2md2&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        9: {
+          id: "widget-p05pmpjm1y5w",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/6232314e47bdf7425577b4d8?widgetId=p05pmpjm1y5w&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        10: {
+          id: "widget-lvq6mpjm0vf0",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623225ce09ac1611ee0dc2c8?widgetId=lvq6mpjm0vf0&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        11: {
+          id: "widget-r0wympjm0f6s",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c5e98b2e367f650e27c?widgetId=r0wympjm0f6s&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        13: {
+          id: "widget-gtghmpjlyvk2",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322b827aee66235a2be718?widgetId=gtghmpjlyvk2&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        14: {
+          id: "widget-ny7gmpjlyls3",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322b4efd209951602c9096?widgetId=ny7gmpjlyls3&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        15: {
+          id: "widget-9gfwmpjlybz7",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62321f50f7016c22d3650732?widgetId=9gfwmpjlybz7&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        16: {
+          id: "widget-ptnpmpjly1xu",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322c053617da0b83221cc6?widgetId=ptnpmpjly1xu&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        17: {
+          id: "widget-yq1lmpjlwfzm",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62322bfa75414360044d5ca4?widgetId=yq1lmpjlwfzm&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        18: {
+          id: "widget-dd2smpjmcau8",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/6232346de797635ae1683310?widgetId=dd2smpjmcau8&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        19: {
+          id: "widget-brhpmpjm8lup",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c9298b2e367f650e96a?widgetId=brhpmpjm8lup&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        20: {
+          id: "widget-5a1gmpjm8c68",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c9254325170cc61a2d0?widgetId=5a1gmpjm8c68&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        21: {
+          id: "widget-y5gtmpjm7zdl",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/67f64f3c6c640cb4310f5c92?widgetId=y5gtmpjm7zdl&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        22: {
+          id: "widget-zc48mpjm79dc",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c727bf6106c72572d4a?widgetId=zc48mpjm79dc&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        23: {
+          id: "widget-pmogmpjm6zay",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623237bd272e3678551e1ee4?widgetId=pmogmpjm6zay&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        24: {
+          id: "widget-jt53mpjm67rc",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c7213ee1621646be514?widgetId=jt53mpjm67rc&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        26: {
+          id: "widget-rcaimpjm4z7i",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623237b876e30636183dc5f4?widgetId=rcaimpjm4z7i&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        28: {
+          id: "widget-gg2impjm5bh3",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62323781eb82e258154aaeea?widgetId=gg2impjm5bh3&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        29: {
+          id: "widget-w05bmpjm5l7b",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/623237838afe7e403066ceaa?widgetId=w05bmpjm5l7b&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        30: {
+          id: "widget-gbdhmpjm5yfq",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c5b13ee1621646be252?widgetId=gbdhmpjm5yfq&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        32: {
+          id: "widget-pbklmpjm3wum",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/6232326c02020c570e0a95bc?widgetId=pbklmpjm3wum&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        34: {
+          id: "widget-3r6rmpjlzkg3",
+          src: "https://widgets.scoreaxis.com/api/football/league-top-players/62327c7113ee1621646be4fe?widgetId=3r6rmpjlzkg3&lang=en&playersCount=10&goalsBlock=1&assistsBlock=1&cardsBlock=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
         }
+      };
 
+      const missingPlayerLeagueIndexes = [7, 12, 25, 27, 31];
+      const missingTeamLeagues = [
+        "English Premier League",
+        "Copa del Rey",
+        "Summer Olympics"
+      ];
+
+      const makeWidgetElement = (config) => {
         const wrapper = document.createElement("div");
         wrapper.className = "scoreaxis-widget";
         wrapper.id = config.id;
@@ -186,11 +431,46 @@
 
         wrapper.appendChild(script);
         wrapper.appendChild(credit);
-        host.replaceChildren(wrapper);
+        return wrapper;
+      };
+
+      const makeMissingPanel = (title) => {
+        const panel = document.createElement("div");
+        panel.className = "flex min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center text-sm font-medium text-slate-500";
+        panel.textContent = title;
+        return panel;
+      };
+
+      const renderWidget = (index) => {
+        const config = leagueWidgets[index];
+        if (!config) {
+          host.replaceChildren();
+          return;
+        }
+
+        const playerConfig = playerWidgetByLeagueIndex[index];
+
+        const layout = document.createElement("div");
+        layout.className = "grid gap-6 xl:grid-cols-2";
+
+        const left = document.createElement("div");
+        left.appendChild(makeWidgetElement(config));
+
+        const right = document.createElement("div");
+        if (playerConfig) {
+          right.appendChild(makeWidgetElement(playerConfig));
+        } else {
+          right.appendChild(makeMissingPanel("Chưa có bảng cầu thủ cho giải này."));
+        }
+
+        layout.appendChild(left);
+        layout.appendChild(right);
+        host.replaceChildren(layout);
       };
 
       const updateVisibleWidget = () => {
-        renderWidget(Number(select.value));
+        const mappedIndex = orderedConfigIndexes[Number(select.value)];
+        renderWidget(mappedIndex);
       };
 
       select.addEventListener("change", updateVisibleWidget);
