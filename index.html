@@ -75,6 +75,7 @@
         { value: 33, label: "UEFA Nations League A", group: "Châu Âu" },
         { value: 35, label: "Europa League", group: "Châu Âu" },
         { value: 36, label: "Champions League", group: "Châu Âu" },
+        { value: 39, label: "Ngoại hạng Anh", group: "Châu Âu" },
         { value: 0, label: "V.League", group: "Châu Á" },
         { value: 2, label: "K-League 1", group: "Châu Á" },
         { value: 3, label: "Pro League Saudi Arabia", group: "Châu Á" },
@@ -279,6 +280,10 @@
         {
           id: "widget-4iuompjl51gw",
           src: "https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=4iuompjl51gw&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        39: {
+          id: "widget-14ommpjo5qf3",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232265abf1fa71a672159ec?widgetId=14ommpjo5qf3&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
         }
       ];
 
@@ -438,6 +443,10 @@
         38: {
           id: "widget-pjtqmpjmpoph",
           src: "https://widgets.scoreaxis.com/api/football/league-table/62327c5c7bf6106c72572a6a?widgetId=pjtqmpjmpoph&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
+        },
+        39: {
+          id: "widget-14ommpjo5qf3",
+          src: "https://widgets.scoreaxis.com/api/football/league-table/6232265abf1fa71a672159ec?widgetId=14ommpjo5qf3&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"
         }
       };
 
@@ -487,14 +496,14 @@
         const playerConfig = playerWidgetByLeagueIndex[index];
 
         const layout = document.createElement("div");
-        layout.className = "grid gap-6 xl:grid-cols-2";
+        layout.className = "grid gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.85fr)]";
 
         const left = document.createElement("div");
         left.className = "w-full min-w-0";
         left.appendChild(makeWidgetElement(config));
 
         const right = document.createElement("div");
-        right.className = "w-full min-w-0";
+        right.className = "w-full min-w-0 xl:justify-self-end";
         if (playerConfig) {
           right.appendChild(makeWidgetElement(playerConfig));
         } else {
