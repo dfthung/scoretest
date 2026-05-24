@@ -1,12 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scoreaxis Test</title>
+  <title>TinNhanh24 - Lịch bóng đá</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              "system-ui",
+              "-apple-system",
+              "BlinkMacSystemFont",
+              "\"Segoe UI\"",
+              "Roboto",
+              "\"Helvetica Neue\"",
+              "Arial",
+              "sans-serif"
+            ]
+          },
+          colors: {
+            ink: "#0f172a",
+            mist: "#f3f6fb",
+            accent: "#d90429",
+            ocean: "#005f73",
+            sun: "#ee9b00"
+          },
+          boxShadow: {
+            soft: "0 10px 35px -18px rgba(15, 23, 42, 0.35)"
+          }
+        }
+      }
+    };
+  </script>
 </head>
-<body>
-  <div id="widget-ul2jmpjgwxab" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;"><script src="https://widgets.scoreaxis.com/api/football/league-table/6232265abf1fa71a672159ec?widgetId=ul2jmpjgwxab&lang=en&teamLogo=1&tableLines=0&homeAway=0&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=0&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script><div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div></div>
+<body class="font-sans text-ink bg-mist">
+  <div class="min-h-screen bg-[radial-gradient(circle_at_top,_#ffffff_0%,_#eef3fb_45%,_#dde7f5_100%)]">
+    <header></header>
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div id="widget-coswmpjgpe03" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;"><script src="https://widgets.scoreaxis.com/api/football/league-table/6232265abf1fa71a672159ec?widgetId=coswmpjgpe03&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=1&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&rowDensity=100&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script><div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div></div>
+    </main>
+    <footer></footer>
+  </div>
+
+  <script defer src="Backend-js/shared-shell.js"></script>
 </body>
 </html>
-
